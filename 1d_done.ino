@@ -19,8 +19,9 @@ const byte N5[11] = {14, 5, 4, 3, 2, 7, 12, 11, 10, 9, 0};
 const byte N6[12] = {14, 5, 4, 3, 2, 1, 0, 9, 10, 11, 12, 7};
 const byte N7[7] = {4, 5, 14, 13, 12, 11, 10};
 const byte N8[13] = {0, 9, 10, 1, 11, 2, 7, 12, 3, 13, 4, 5, 14};
-const byte N9[12] = {4, 3, 2, 7, 12, 5, 14, 13, 11, 10, 9, 0};
-byte gamestate = 5;
+const byte N9[12] = {4, 3, 2, 7, 12, 5, 14, 13, 11, 10, 9, 0};   
+//what number to display for scoreboard. each number is led position on the 3x3 scoreboard.
+byte gamestate = 5; //Which state the gameboard is in.
 byte start;
 byte redscore = 0;
 byte greenscore = 0;
@@ -87,8 +88,8 @@ void setup() {
   FastLED.addLeds<WS2812B, 8, GRB>(leds1, NUM_LEDS1);
   FastLED.addLeds<WS2812B, 9, GRB>(leds2, NUM_LEDS2);
   FastLED.addLeds<WS2812B, 10, GRB>(leds3, NUM_LEDS3);
-  pinMode(2, INPUT_PULLUP);
-  pinMode(3, INPUT_PULLUP);
+  pinMode(2, INPUT_PULLUP); //adds button one
+  pinMode(3, INPUT_PULLUP); //adds button two
   attachInterrupt(0, RED, FALLING);
   attachInterrupt(1, GREEN, FALLING);
 }
@@ -120,7 +121,7 @@ void loop() {
       }
       FastLED.show();
       break;
-    case 1:
+    case 1: //checking where the leds are and if the game is started. If it hit the end or if the user pressed before hand.
     dancing = false;
       showscore();
       if (start == 0) {
@@ -464,7 +465,7 @@ void showscore() {
 
 void redwinanimation() {
   leds1off();
-  leds2off();
+  leds2off();//turn scoreboard leds on and off(green/red)
   leds3off();
   for (i = 0; i < 4; i++) {
     for (m = 0; m < NUM_LEDS2; m++) {
@@ -489,7 +490,7 @@ void redwinanimation() {
 void greenwinanimation() {
   leds1off();
   leds2off();
-  leds3off();
+  leds3off(); //turn off all leds
   for (i = 0; i < 4; i++) {
     for (m = 0; m < NUM_LEDS3; m++) {
       leds3[m].setRGB(0, 255, 0);
@@ -497,7 +498,7 @@ void greenwinanimation() {
     for (m = 0; m < NUM_LEDS2; m++) {
       leds2[m].setRGB(255, 0, 0);
     }
-    FastLED.show();
+    FastLED.show(); //turn scoreboard leds on and off(green/red)
     delay(500);
     for (m = 0; m < NUM_LEDS2; m++) {
       leds3[m].setRGB(0, 0, 0);
